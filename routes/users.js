@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+var User = require('../repositories/users')
+module.exports = function(router){
+	router.route('/users')
+		.get(async function(req, res){
+			user = await User.getAllUsers();
+			//res.send(user);
+      res.render('index',user);
+		})
+		.post(async function(req, res){
+			console.log(req.body);
+			// verification de data
+			var createdUser = await User.addUser(req.body);
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+			res.send('User added');
 
-module.exports = router;
+		})
+}
