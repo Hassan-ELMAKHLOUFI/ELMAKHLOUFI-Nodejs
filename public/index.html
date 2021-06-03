@@ -2,14 +2,365 @@
 
 <head>
   <title>Express</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <style>
+    /* body {
+  background-color: #E9967A;
+} */
+
+
+
+button {
+  border-radius: 1px;
+  min-width: 100px;
+ } 
+ form label {
+  font-weight: normal;
+ } 
+
+  </style>
+
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Hassan test</p>
-</body>
+  <nav class="navbar navbar-light bg-light" style="background-color: #696969 !important;">
+    <a class="navbar-brand" href="#">
+      <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+      Bootstrap
+    </a>
+  </nav>
+ 
+<br>
+<br>
+<br>
+<div id="updateform">
+  <input type="number" id="idUser" placeholder="ID D'UTILISATEUR A MODIFIER"><br>
+  <input type="text" id="username" placeholder="username"><br>
+  <input type="email" id="email" placeholder="email"><br>
+  <input type="password" id="password" placeholder="PASSWORD"><br>
+  <input type="text" id="role" placeholder="ROLE {admin, author, guest}"><br><br>
+  <button class="btn btn-success" onclick="updateUser()">modifier</button>
+</div>
+
+
+<div id="deleteform">
+  <input type="number" id="idUserDelete" placeholder="ID D'UTILISATEUR A Supprimer"><br>
+
+  <button class="btn btn-success" onclick="deleteUser()">supprimer</button>
+</div>
+
+
+
+
+
+<div id="Addform">
+  <input type="text" id="newUsername" placeholder="newUsername"><br>
+  <input type="email" id="newEmail" placeholder="newEmail"><br>
+  <input type="password" id="newPassword" placeholder="newPassword"><br>
+  <input type="text" id="newRole" placeholder="ROLE {admin, author, guest}"><br><br>
+  <button class="btn btn-success" onclick="addUser()">Ajouter</button>
+</div>
+  <!-- <div class="container">
+    <button>La gestion des Utilisateurs</button> 
+    <button>La gestion des Articles</button> 
+    <button>La gestion des Commentaires</button>
+    <button>La gestion des Tags</button>
+
+  </div> -->
+<div style="margin-right: 100px; margin-left: 100px;">
+  <div id="tableuser" class="table"></div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody id="usertable">
+    
+  
+        <!-- <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>Admin</td>
+        <td><a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a></td> -->
+      
+      
+    </tbody>
+  </table> 
+  
+ 
+
+
+<script>
+  function addUser(){
+
+    let tbody=document.getElementById('usertable');
+  while(tbody.hasChildNodes()){
+    tbody.removeChild(tbody.firstChild);
+  }
+  let username= document.getElementById('newUsername').value;
+  let email= document.getElementById('newEmail').value;
+  let role= document.getElementById('newRole').value;
+  let password= document.getElementById('newPassword').value;
+
+data={username,email,role,password};
+        (async () => {
+      const rawResponse = await fetch('/users', {
+          method: 'POST',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(res => res.json())
+      .then(function(data) {
+        console.log(data);
+        let ob = Object.keys(data)
+        var tab=document.getElementById('usertable');
+        var row=document.createElement("tr");
+        var cell =document.createElement("th");
+        for(var i=0;i<ob.length;i++){
+          var row = document.createElement("tr");  
+          var cell = document.createElement("th");   
+          cellText=  document.createTextNode(i);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].id);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].username);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].email);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
+          cell.innerHTML=h;
+        
+          row.appendChild(cell);
+          tab.appendChild(row)
+
+        }
+
+        
+  })
+      })();
+  }
+</script>
+
+
+<script>
+function getUser(){
+
+     fetch('/users', {
+      method: 'GET',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      
+    }).then(res => res.json())
+      .then(function(data) {
+        console.log(data);
+        let ob = Object.keys(data)
+        var tab=document.getElementById('usertable');
+        var row=document.createElement("tr");
+        var cell =document.createElement("th");
+        for(var i=0;i<ob.length;i++){
+          var row = document.createElement("tr");  
+          var cell = document.createElement("th");   
+          cellText=  document.createTextNode(i);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].id);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].username);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].email);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
+          cell.innerHTML=h;
+        
+          row.appendChild(cell);
+          tab.appendChild(row)
+
+        }
+
+        
+  })
+    }
+</script>
+<script>
+
+function updateUser(){
+  let tbody=document.getElementById('usertable');
+  while(tbody.hasChildNodes()){
+    tbody.removeChild(tbody.firstChild);
+  }
+  let id=document.getElementById('idUser').value;;
+  let username= document.getElementById('username').value;
+  let email= document.getElementById('email').value;
+  let role= document.getElementById('role').value;
+  let password= document.getElementById('password').value;
+
+data={id,username,email,role,password};
+ fetch('/users', {
+  method: 'PUT',
+  headers:{
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+}).then(res => res.json())
+      .then(function(data) {
+        console.log(data);
+        let ob = Object.keys(data)
+        var tab=document.getElementById('usertable');
+        var row=document.createElement("tr");
+        var cell =document.createElement("th");
+        for(var i=0;i<ob.length;i++){
+          var row = document.createElement("tr");  
+          var cell = document.createElement("th");   
+          cellText=  document.createTextNode(i);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].id);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].username);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].email);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
+          cell.innerHTML=h;
+        
+          row.appendChild(cell);
+          tab.appendChild(row)
+
+        }
+
+        
+  })
+   
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function deleteUser(){
+  let tbody=document.getElementById('usertable');
+  while(tbody.hasChildNodes()){
+    tbody.removeChild(tbody.firstChild);
+  }
+  let id=  document.getElementById('idUserDelete').value;;
+
+
+data={id,username,email,role,password};
+ fetch('/users', {
+  method: 'DELETE',
+  headers:{
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+}).then(res => res.json())
+      .then(function(data) {
+        console.log(data);
+        let ob = Object.keys(data)
+        var tab=document.getElementById('usertable');
+        var row=document.createElement("tr");
+        var cell =document.createElement("th");
+        for(var i=0;i<ob.length;i++){
+          var row = document.createElement("tr");  
+          var cell = document.createElement("th");   
+          cellText=  document.createTextNode(i);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].id);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].username);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+          cellText=  document.createTextNode(data[i].email);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          
+          cell = document.createElement("td");   
+         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
+          cell.innerHTML=h;
+        
+          row.appendChild(cell);
+          tab.appendChild(row)
+
+        }
+
+        
+  })
+   
+}
+</script>
+<script>getUser()</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
 
 <div class="row">
   <div class="col-6">
@@ -23,7 +33,7 @@
 
  
     <tr>
-      <% for(var i = 0; i < 6; i++) { %>
+      <% for(var i = 0; i < user.length ; i++) { %>
         <tr>
             
             <td><%= user[i].id %></td>
@@ -37,3 +47,34 @@
 
   </tbody>
 </table>
+
+
+<button onclick="addUser()">ajouter</button>
+
+<script>
+  function addUser(){
+
+        data={
+          username:'sass',
+          email:'saaa',
+          role:'admin',
+      
+        };
+        (async () => {
+      const rawResponse = await fetch('/users', {
+          method: 'POST',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(response => response.json()) 
+          .then(json => console.log(json))
+          .catch(err => console.log(err));
+      })();
+  }
+</script>
+
+</body>
+</html>
+
