@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+  
   
   <style>
     /* body {
@@ -99,268 +99,96 @@ button {
     </tbody>
   </table> 
   
- 
-
-
-<script>
-  function addUser(){
-
-    let tbody=document.getElementById('usertable');
-  while(tbody.hasChildNodes()){
-    tbody.removeChild(tbody.firstChild);
-  }
-  let username= document.getElementById('newUsername').value;
-  let email= document.getElementById('newEmail').value;
-  let role= document.getElementById('newRole').value;
-  let password= document.getElementById('newPassword').value;
-
-data={username,email,role,password};
-        (async () => {
-      const rawResponse = await fetch('/users', {
-          method: 'POST',
-          headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        }).then(res => res.json())
-      .then(function(data) {
-        console.log(data);
-        let ob = Object.keys(data)
-        var tab=document.getElementById('usertable');
-        var row=document.createElement("tr");
-        var cell =document.createElement("th");
-        for(var i=0;i<ob.length;i++){
-          var row = document.createElement("tr");  
-          var cell = document.createElement("th");   
-          cellText=  document.createTextNode(i);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].id);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].username);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].email);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-          cell.innerHTML=h;
-        
-          row.appendChild(cell);
-          tab.appendChild(row)
-
-        }
-
-        
-  })
-      })();
-  }
-</script>
-
-
-<script>
-function getUser(){
-
-     fetch('/users', {
-      method: 'GET',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
       
-    }).then(res => res.json())
-      .then(function(data) {
-        console.log(data);
-        let ob = Object.keys(data)
-        var tab=document.getElementById('usertable');
-        var row=document.createElement("tr");
-        var cell =document.createElement("th");
-        for(var i=0;i<ob.length;i++){
-          var row = document.createElement("tr");  
-          var cell = document.createElement("th");   
-          cellText=  document.createTextNode(i);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
+        <a class="page-link" onclick="getUserPage(parseInt(nume)-1)">Previeus</a>
+      
+      <li class="page-item"><a class="page-link" onclick="getUserPage(0)">1</a></li>
+      <li class="page-item"><a class="page-link" onclick="getUserPage(1)" >2</a></li>
+      <li class="page-item"><a class="page-link" onclick="getUserPage(2)">3</a></li>
+      <li class="page-item">
+        <a class="page-link" onclick="getUserPage(parseInt(nume)+1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+  <script src="./javascripts/index.js"></script>
+<button onclick="getUserPage()">test</button>
 
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].id);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].username);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].email);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-          cell.innerHTML=h;
-        
-          row.appendChild(cell);
-          tab.appendChild(row)
-
-        }
-
-        
-  })
-    }
-</script>
-<script>
-
-function updateUser(){
-  let tbody=document.getElementById('usertable');
-  while(tbody.hasChildNodes()){
-    tbody.removeChild(tbody.firstChild);
-  }
-  let id=document.getElementById('idUser').value;;
-  let username= document.getElementById('username').value;
-  let email= document.getElementById('email').value;
-  let role= document.getElementById('role').value;
-  let password= document.getElementById('password').value;
-
-data={id,username,email,role,password};
- fetch('/users', {
-  method: 'PUT',
-  headers:{
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(data)
-}).then(res => res.json())
-      .then(function(data) {
-        console.log(data);
-        let ob = Object.keys(data)
-        var tab=document.getElementById('usertable');
-        var row=document.createElement("tr");
-        var cell =document.createElement("th");
-        for(var i=0;i<ob.length;i++){
-          var row = document.createElement("tr");  
-          var cell = document.createElement("th");   
-          cellText=  document.createTextNode(i);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].id);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].username);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].email);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-          cell.innerHTML=h;
-        
-          row.appendChild(cell);
-          tab.appendChild(row)
-
-        }
-
-        
-  })
-   
-}
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-<script>
-function deleteUser(){
-  let tbody=document.getElementById('usertable');
-  while(tbody.hasChildNodes()){
-    tbody.removeChild(tbody.firstChild);
-  }
-  let id=  document.getElementById('idUserDelete').value;;
-
-
-data={id,username,email,role,password};
- fetch('/users', {
-  method: 'DELETE',
-  headers:{
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(data)
-}).then(res => res.json())
-      .then(function(data) {
-        console.log(data);
-        let ob = Object.keys(data)
-        var tab=document.getElementById('usertable');
-        var row=document.createElement("tr");
-        var cell =document.createElement("th");
-        for(var i=0;i<ob.length;i++){
-          var row = document.createElement("tr");  
-          var cell = document.createElement("th");   
-          cellText=  document.createTextNode(i);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].id);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].username);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data[i].email);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-          cell.innerHTML=h;
-        
-          row.appendChild(cell);
-          tab.appendChild(row)
-
-        }
-
-        
-  })
-   
-}
-</script>
 <script>getUser()</script>
+<script>var nume=0;</script>
+
+<script>  
+
+function getUserPage(num){
+
+
+let tbody=document.getElementById('usertable');
+while(tbody.hasChildNodes()){
+  tbody.removeChild(tbody.firstChild);
+}
+let username= document.getElementById('newUsername').value;
+let email= document.getElementById('newEmail').value;
+let role= document.getElementById('newRole').value;
+let password= document.getElementById('newPassword').value;
+
+
+fetch('/users/page/'+num, {
+method: 'GET',
+headers:{
+ 'Accept': 'application/json',
+ 'Content-Type': 'application/json'
+},
+
+}).then(res => res.json())
+.then(function(data) {
+ console.log(data);
+ let ob = Object.keys(data.users)
+ var tab=document.getElementById('usertable');
+ var row=document.createElement("tr");
+ var cell =document.createElement("th");
+ for(var i=0;i<ob.length;i++){
+   var row = document.createElement("tr");  
+   var cell = document.createElement("th");   
+   cellText=  document.createTextNode(i);
+   cell.appendChild(cellText);
+   row.appendChild(cell);
+   
+
+   cell = document.createElement("td");   
+   cellText=  document.createTextNode(data.users[i].id);
+   cell.appendChild(cellText);
+   row.appendChild(cell);
+
+   cell = document.createElement("td");   
+   cellText=  document.createTextNode(data.users[i].username);
+   cell.appendChild(cellText);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+   cellText=  document.createTextNode(data.users[i].email);
+   cell.appendChild(cellText);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+  var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
+   cell.innerHTML=h;
+ 
+   row.appendChild(cell);
+   tab.appendChild(row)
+
+ }
+nume=data.num;
+console.log(num);
+ 
+})
+}
+
+
+
+</script>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

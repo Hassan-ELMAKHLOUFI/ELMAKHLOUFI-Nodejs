@@ -1,23 +1,45 @@
-var User = require('../repositories/users')
+const express =require('express')
+const router = express.Router()
+var Users = require('../repositories/users');
 
-module.exports = function(router){
-	router.route('/users')
-		.get(async function(req, res){
-			user = await User.getAllUsers();
-			res.send(user);
+var { User } = require('../models')
+	
+		router.get('/',async function(req, res,next){
+			user = await User.findAndCountAll({
+				offset: 0,
+				limit :7
+			});
+			res.send({users:user.rows,num:1});
 			//res.render('index',user);
 			
-		})
-		.post(async function(req, res){
+		});
+
+		router.get('/page/:num',async function(req, res,next){
+			user = await User.findAndCountAll({
+				offset: req.params.num*7,
+				limit :7
+			});
+
+				var num=req.params.num
+			
+			res.send({users:user.rows,num:req.params.num});
+			//res.render('index',user);
+			
+		});
+		router.post('/',async function(req, res,next){
 			console.log(req.body);
 			// verification de data
-		var createdUser = await User.addUser(req.body);
-		user = await User.getAllUsers();
-		res.send(user);
+		var createdUser = await Users.addUser(req.body);
+		user = await User.findAndCountAll({
+			offset: 0,
+			limit :7
+		});
+		res.send({users:user.rows,num:1});
      	// res.render('index',user);
         
 
-		}).put(async function(req, res) {
+		});
+		router.put('/',async function(req, res,next) {
 			const datareq = req.body;
 			const data = {
 			  username : req.body.username,
@@ -26,14 +48,21 @@ module.exports = function(router){
 			  role : req.body.role
 			}
 		
-			await User.updateUser(req.body.id,data) 
-			user = await User.getAllUsers();
-			res.send(user);
-		}).delete(async function (req,res){
+			await Users.updateUser(req.body.id,data) 
+			user = await User.findAndCountAll({
+				offset: 0,
+				limit :7
+			});
+			res.send({users:user.rows,num:1});
+		});
+		router.delete('/',async function (req,res,next){
 		
-				await User.deleteUser(req.body.id)
-				user = await User.getAllUsers();
-				res.send(user);
+				await Users.deleteUser(req.body.id)
+				user = await User.findAndCountAll({
+					offset: 0,
+					limit :7
+				});
+				res.send({users:user.rows,num:1});
 
-		})
-}
+		});
+module.exports=router;

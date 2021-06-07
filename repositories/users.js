@@ -53,6 +53,9 @@ module.exports = {
 			}
 		})
 	},
+	findUser: async function(id){
+		return await User.findOne({ where: { id: id } })},
+		
 	deleteUser: async function(id){
 		return await User.destroy({
 			where: {
