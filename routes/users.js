@@ -9,7 +9,7 @@ var { User } = require('../models')
 				offset: 0,
 				limit :7
 			});
-			res.send({users:user.rows,num:1});
+			res.send({users:user.rows,num:0});
 			//res.render('index',user);
 			
 		});
