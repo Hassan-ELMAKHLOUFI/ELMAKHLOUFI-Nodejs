@@ -1,5 +1,20 @@
 function getArticles(){
-       
+  document.body.style.background = "#E9967A";  
+  
+  
+
+ var nodes = document.getElementById('usersId');
+nodes.style.setProperty("display", "none", "important");
+
+var nodes1 = document.getElementById('ArticlePage');
+nodes1.style.setProperty("display", "none", "important");
+
+var nodeArticle = document.getElementById('article');
+nodeArticle.style.setProperty("display", "inline", "important");
+
+var nodes2 = document.getElementById('auth');
+nodes2.style.setProperty("display", "none", "important");
+
     num =0;
     let tbody=document.getElementById('articles');
     while(tbody.hasChildNodes()){
@@ -30,8 +45,8 @@ function getArticles(){
          div1.appendChild(div2); 
 
      var img=document.createElement("img");
-     
-       img.setAttribute("src", "http://lorempixel.com/400/20"+data.articles[i].id);
+     var loremImg=+ data.articles[i].id+ +200;
+       img.setAttribute("src", "http://lorempixel.com/400/"+loremImg);
        img.style.height="180px";
        img.style.width="100 px !important";
        img.classList.add('card-img-top');
@@ -58,17 +73,22 @@ function getArticles(){
    p.appendChild(text);
    div3.appendChild(p);
 
-   var a=document.createElement("a");
+   var a=document.createElement("button");
    
    a.classList.add('btn');
    a.classList.add('btn-primary');
    text=  document.createTextNode("learn more");
+  
    a.appendChild(text);
+  
+   //a.onclick = getArticleDetails(1);
+   a.setAttribute('onclick','getArticleDetails('+data.articles[i].id+')');
+
    div3.appendChild(a);
 
-   
    }
- 
+   numeArticle=data.num;
    
    })
+   
    }

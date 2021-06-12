@@ -54,17 +54,17 @@
     <nav aria-label="Page navigation example" style="margin-right: 42%;">
       <ul class="pagination justify-content-end">
         
-          <a class="page-link" onclick="getArticlesPage(parseInt(nume)-1)">Previeus</a>
+          <a class="page-link" onclick="getArticlesPage(parseInt(numeArticle)-1)">Previeus</a>
         
         <li class="page-item"><a class="page-link" onclick="getArticlesPage(0)">1</a></li>
         <li class="page-item"><a class="page-link" onclick="getArticlesPage(1)" >2</a></li>
         <li class="page-item"><a class="page-link" onclick="getArticlesPage(2)">3</a></li>
         <li class="page-item">
-          <a class="page-link" onclick="getArticlesPage(parseInt(nume)+1)">Next</a>
+          <a class="page-link" onclick="getArticlesPage(parseInt(numeArticle)+1)">Next</a>
         </li>
       </ul>
     </nav>
-    <script>var nume=0;</script>
+    <script>var numeArticle=0;</script>
       <script>  
 
                 function getArticlesPage(num){
@@ -140,7 +140,7 @@
 
    
    }
-   nume=data.num;
+   numeArticle=data.num;
    
    })
    

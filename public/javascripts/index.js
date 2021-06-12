@@ -1,18 +1,29 @@
 
-  function addUser(){
+   function addUser(){
 
     let tbody=document.getElementById('usertable');
   while(tbody.hasChildNodes()){
     tbody.removeChild(tbody.firstChild);
   }
+
+  let sel=document.getElementById('idUser');
+while(sel.hasChildNodes()){
+  sel.removeChild(sel.firstChild);
+}
+
+let seldeluser=document.getElementById('idUserDelete');
+while(seldeluser.hasChildNodes()){
+  seldeluser.removeChild(seldeluser.firstChild);
+}
+
+
   let username= document.getElementById('newUsername').value;
   let email= document.getElementById('newEmail').value;
   let role= document.getElementById('newRole').value;
   let password= document.getElementById('newPassword').value;
 
 data={username,email,role,password};
-        (async () => {
-      const rawResponse = await fetch('/users', {
+        fetch('/users', {
           method: 'POST',
           headers:{
             'Accept': 'application/json',
@@ -21,49 +32,128 @@ data={username,email,role,password};
           body: JSON.stringify(data)
         }).then(res => res.json())
         .then(function(data) {
-          console.log(data);
-          let ob = Object.keys(data.users)
-          var tab=document.getElementById('usertable');
-          var row=document.createElement("tr");
-          var cell =document.createElement("th");
-          for(var i=0;i<ob.length;i++){
-            var row = document.createElement("tr");  
-            var cell = document.createElement("th");   
-            cellText=  document.createTextNode(i);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-            
+         console.log(data);
+         let ob = Object.keys(data.users)
+         var tab=document.getElementById('usertable');
+         var row=document.createElement("tr");
+         var cell =document.createElement("th");
+         for(var i=0;i<ob.length;i++){
+        // get reference to select element
+        var sel = document.getElementById('idUser');
+        
+        // create new option element
+        var opt = document.createElement('option');
+        
+        // create text node to add to option element (opt)
+        opt.appendChild( document.createTextNode(data.users[i].username) );
+        
+        // set value property of opt
+        opt.value = data.users[i].id; 
+        
+        // add opt to end of select box (sel)
+        sel.appendChild(opt);
+        
+        
+        
+        // get reference to select element
+         sel = document.getElementById('idUserDelete');
+        
+        // create new option element
+         opt = document.createElement('option');
+        
+        // create text node to add to option element (opt)
+        opt.appendChild( document.createTextNode(data.users[i].username) );
+        
+        // set value property of opt
+        opt.value = data.users[i].id; 
+        
+        // add opt to end of select box (sel)
+        sel.appendChild(opt);
+        
+        
+        
+           var row = document.createElement("tr");  
+           var cell = document.createElement("th");   
+           cellText=  document.createTextNode(i);
+           cell.appendChild(cellText);
+           cell.setAttribute("id", "user_id");
+           row.appendChild(cell);
+           
+        
+        
+           cell = document.createElement("td");
+           span=  document.createElement("span");  
+           cellText=  document.createTextNode(data.users[i].username);
+          span.appendChild(cellText);
+           span.setAttribute("id", "username");
+           cell.appendChild(span);
+           row.appendChild(cell);
+           
+           cell = document.createElement("td");   
+           cellText=  document.createTextNode(data.users[i].email);
+           span=  document.createElement("span");
+           span.appendChild(cellText);
+           span.setAttribute("id", "email");
+           cell.appendChild(span);
+           row.appendChild(cell);
+           
+           cell = document.createElement("td");   
+            cellText=  document.createTextNode(data.users[i].role);
+            span=  document.createElement("span");
+            span.appendChild(cellText);
+           span.setAttribute("id", "role");
+           cell.appendChild(span);
+           row.appendChild(cell);
+        
         
             cell = document.createElement("td");   
-            cellText=  document.createTextNode(data.users[i].id);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
+            cellText=  document.createTextNode(data.users[i].password);
+            span=  document.createElement("span");
+            span.appendChild(cellText);
+           span.setAttribute("id", "role");
+           cell.appendChild(span);
+           row.appendChild(cell);
         
-            cell = document.createElement("td");   
-            cellText=  document.createTextNode(data.users[i].username);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-            
-            cell = document.createElement("td");   
-            cellText=  document.createTextNode(data.users[i].email);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-            
-            cell = document.createElement("td");   
-           var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-            cell.innerHTML=h;
-          
-            row.appendChild(cell);
-            tab.appendChild(row)
         
-          }
+         
+           tab.appendChild(row)
+        
+         }
         
           
         })
-      })();
+     
   }
 
 function getUser(){
+
+  document.body.style.background = "#FFFF"; 
+  var nodes = document.getElementById('usersId');
+nodes.style.setProperty("display", "inline", "important");
+
+ var nodeArticle= document.getElementById('article');
+ nodeArticle.style.setProperty("display", "none", "important");
+
+
+var nodes1 = document.getElementById('ArticlePage');
+nodes1.style.setProperty("display", "none", "important");
+
+
+var nodes2 = document.getElementById('auth');
+nodes2.style.setProperty("display", "none", "important");
+
+
+
+
+let tbody=document.getElementById('usertable');
+while(tbody.hasChildNodes()){
+  tbody.removeChild(tbody.firstChild);
+}
+
+let sel=document.getElementById('idUser');
+while(sel.hasChildNodes()){
+  sel.removeChild(sel.firstChild);
+}
 
      fetch('/users', {
       method: 'GET',
@@ -73,46 +163,97 @@ function getUser(){
       },
       
     }).then(res => res.json())
-      .then(function(data) {
-        console.log(data);
-        let ob = Object.keys(data.users)
-        var tab=document.getElementById('usertable');
-        var row=document.createElement("tr");
-        var cell =document.createElement("th");
-        for(var i=0;i<ob.length;i++){
-          var row = document.createElement("tr");  
-          var cell = document.createElement("th");   
-          cellText=  document.createTextNode(i);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
+    .then(function(data) {
+     console.log(data);
+     let ob = Object.keys(data.users)
+     var tab=document.getElementById('usertable');
+     var row=document.createElement("tr");
+     var cell =document.createElement("th");
+     for(var i=0;i<ob.length;i++){
+    // get reference to select element
+    var sel = document.getElementById('idUser');
+    
+    // create new option element
+    var opt = document.createElement('option');
+    
+    // create text node to add to option element (opt)
+    opt.appendChild( document.createTextNode(data.users[i].username) );
+    
+    // set value property of opt
+    opt.value = data.users[i].id; 
+    
+    // add opt to end of select box (sel)
+    sel.appendChild(opt);
+    
+    
+    
+    // get reference to select element
+     sel = document.getElementById('idUserDelete');
+    
+    // create new option element
+     opt = document.createElement('option');
+    
+    // create text node to add to option element (opt)
+    opt.appendChild( document.createTextNode(data.users[i].username) );
+    
+    // set value property of opt
+    opt.value = data.users[i].id; 
+    
+    // add opt to end of select box (sel)
+    sel.appendChild(opt);
+    
+    
+    
+       var row = document.createElement("tr");  
+       var cell = document.createElement("th");   
+       cellText=  document.createTextNode(i);
+       cell.appendChild(cellText);
+       cell.setAttribute("id", "user_id");
+       row.appendChild(cell);
+       
+    
+    
+       cell = document.createElement("td");
+       span=  document.createElement("span");  
+       cellText=  document.createTextNode(data.users[i].username);
+      span.appendChild(cellText);
+       span.setAttribute("id", "username");
+       cell.appendChild(span);
+       row.appendChild(cell);
+       
+       cell = document.createElement("td");   
+       cellText=  document.createTextNode(data.users[i].email);
+       span=  document.createElement("span");
+       span.appendChild(cellText);
+       span.setAttribute("id", "email");
+       cell.appendChild(span);
+       row.appendChild(cell);
+       
+       cell = document.createElement("td");   
+        cellText=  document.createTextNode(data.users[i].role);
+        span=  document.createElement("span");
+        span.appendChild(cellText);
+       span.setAttribute("id", "role");
+       cell.appendChild(span);
+       row.appendChild(cell);
+    
+    
+        cell = document.createElement("td");   
+        cellText=  document.createTextNode(data.users[i].password);
+        span=  document.createElement("span");
+        span.appendChild(cellText);
+       span.setAttribute("id", "role");
+       cell.appendChild(span);
+       row.appendChild(cell);
+    
+    
+     
+       tab.appendChild(row)
+    
+     }
 
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data.users[i].id);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data.users[i].username);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-          cellText=  document.createTextNode(data.users[i].email);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-          
-          cell = document.createElement("td");   
-         var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-          cell.innerHTML=h;
-        
-          row.appendChild(cell);
-          tab.appendChild(row)
-
-        }
-
-        
-  })
+     
+    })
     }
 
 
@@ -137,46 +278,96 @@ data={id,username,email,role,password};
   body: JSON.stringify(data)
 }).then(res => res.json())
 .then(function(data) {
-  console.log(data);
-  let ob = Object.keys(data.users)
-  var tab=document.getElementById('usertable');
-  var row=document.createElement("tr");
-  var cell =document.createElement("th");
-  for(var i=0;i<ob.length;i++){
-    var row = document.createElement("tr");  
-    var cell = document.createElement("th");   
-    cellText=  document.createTextNode(i);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
+ console.log(data);
+ let ob = Object.keys(data.users)
+ var tab=document.getElementById('usertable');
+ var row=document.createElement("tr");
+ var cell =document.createElement("th");
+ for(var i=0;i<ob.length;i++){
+// get reference to select element
+var sel = document.getElementById('idUser');
 
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].id);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
+// create new option element
+var opt = document.createElement('option');
 
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].username);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].email);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
-    cell = document.createElement("td");   
-   var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-    cell.innerHTML=h;
-  
-    row.appendChild(cell);
-    tab.appendChild(row)
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
 
-  }
+// set value property of opt
+opt.value = data.users[i].id; 
 
-  
-})
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
+// get reference to select element
+ sel = document.getElementById('idUserDelete');
+
+// create new option element
+ opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
+
+// set value property of opt
+opt.value = data.users[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
+   var row = document.createElement("tr");  
+   var cell = document.createElement("th");   
+   cellText=  document.createTextNode(i);
+   cell.appendChild(cellText);
+   cell.setAttribute("id", "user_id");
+   row.appendChild(cell);
    
+
+
+   cell = document.createElement("td");
+   span=  document.createElement("span");  
+   cellText=  document.createTextNode(data.users[i].username);
+  span.appendChild(cellText);
+   span.setAttribute("id", "username");
+   cell.appendChild(span);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+   cellText=  document.createTextNode(data.users[i].email);
+   span=  document.createElement("span");
+   span.appendChild(cellText);
+   span.setAttribute("id", "email");
+   cell.appendChild(span);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+    cellText=  document.createTextNode(data.users[i].role);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
+   row.appendChild(cell);
+
+
+    cell = document.createElement("td");   
+    cellText=  document.createTextNode(data.users[i].password);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
+   row.appendChild(cell);
+
+
+ 
+   tab.appendChild(row)
+
+ }
+
+ 
+})
 }
 
 
@@ -205,44 +396,94 @@ data={id,username,email,role,password};
   body: JSON.stringify(data)
 }).then(res => res.json())
 .then(function(data) {
-  console.log(data);
-  let ob = Object.keys(data.users)
-  var tab=document.getElementById('usertable');
-  var row=document.createElement("tr");
-  var cell =document.createElement("th");
-  for(var i=0;i<ob.length;i++){
-    var row = document.createElement("tr");  
-    var cell = document.createElement("th");   
-    cellText=  document.createTextNode(i);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
+ console.log(data);
+ let ob = Object.keys(data.users)
+ var tab=document.getElementById('usertable');
+ var row=document.createElement("tr");
+ var cell =document.createElement("th");
+ for(var i=0;i<ob.length;i++){
+// get reference to select element
+var sel = document.getElementById('idUser');
 
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].id);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
+// create new option element
+var opt = document.createElement('option');
 
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].username);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].email);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    
-    cell = document.createElement("td");   
-   var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-    cell.innerHTML=h;
-  
-    row.appendChild(cell);
-    tab.appendChild(row)
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
 
-  }
+// set value property of opt
+opt.value = data.users[i].id; 
 
-  
-})
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
+// get reference to select element
+ sel = document.getElementById('idUserDelete');
+
+// create new option element
+ opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
+
+// set value property of opt
+opt.value = data.users[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
+   var row = document.createElement("tr");  
+   var cell = document.createElement("th");   
+   cellText=  document.createTextNode(i);
+   cell.appendChild(cellText);
+   cell.setAttribute("id", "user_id");
+   row.appendChild(cell);
    
+
+
+   cell = document.createElement("td");
+   span=  document.createElement("span");  
+   cellText=  document.createTextNode(data.users[i].username);
+  span.appendChild(cellText);
+   span.setAttribute("id", "username");
+   cell.appendChild(span);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+   cellText=  document.createTextNode(data.users[i].email);
+   span=  document.createElement("span");
+   span.appendChild(cellText);
+   span.setAttribute("id", "email");
+   cell.appendChild(span);
+   row.appendChild(cell);
+   
+   cell = document.createElement("td");   
+    cellText=  document.createTextNode(data.users[i].role);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
+   row.appendChild(cell);
+
+
+    cell = document.createElement("td");   
+    cellText=  document.createTextNode(data.users[i].password);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
+   row.appendChild(cell);
+
+
+ 
+   tab.appendChild(row)
+
+ }
+
+ 
+})
 }

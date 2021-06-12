@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="password"  id="password">
+    <input type="text" id="username">
+    <button type="button" onclick="authe()" >connecter </button>
+</body>
+
+
+<script>
+        function authe(){
+            
+            let username= document.getElementById('username').value;
+            let password= document.getElementById('password').value;
+
+data={username,password};
+            fetch('/users/api/login', {
+                method: 'POST',
+                headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+                
+            },
+            body: JSON.stringify(data)
+                }).then(res => res.json())
+                .then(function(data) {
+                console.log(data);
+                })
+        }
+
+</script>
+</html>

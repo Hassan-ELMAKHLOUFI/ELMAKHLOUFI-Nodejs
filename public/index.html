@@ -2,19 +2,25 @@
 
 <head>
   <title>Express</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
   
-  
+
+
   <style>
     /* body {
   background-color: #E9967A;
 } */
 
+.actionUser{
+  margin-left: 70%;
 
+ 
+}
 
 button {
   border-radius: 1px;
@@ -24,98 +30,625 @@ button {
   font-weight: normal;
  } 
 
+ .imageBlog{
+ width: 900px;
+ height: 400px;
+ margin-left: 17%;
+  }
+
   </style>
 
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light" style="background-color: #696969 !important;">
-    <a class="navbar-brand" href="#">
-      <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
-      Bootstrap
-    </a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #696969 !important;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./images/JavaScript_logo_2.svg.png" width="30" height="30" class="d-inline-block align-top" alt="non disponible">
+        Hassan Blog
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" style="color: cornsilk;" aria-current="page" onclick="getUser()" href="#">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: cornsilk;" onclick="getArticles()" href="#">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="margin-left: 1000px !important; color: cornsilk;"  onclick="connexion()" id="connexion" href="#">Connextion</a>
+          </li>
+      
+        </ul>
+      </div>
+    </div>
   </nav>
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<div id="auth" style="margin-left: 30%;"> 
+  <div class="row">
+    <aside class="col-sm-4">
  
-<br>
-<br>
-<br>
-<div id="updateform">
-  <input type="number" id="idUser" placeholder="ID D'UTILISATEUR A MODIFIER"><br>
-  <input type="text" id="username" placeholder="username"><br>
-  <input type="email" id="email" placeholder="email"><br>
-  <input type="password" id="password" placeholder="PASSWORD"><br>
-  <input type="text" id="role" placeholder="ROLE {admin, author, guest}"><br><br>
-  <button class="btn btn-success" onclick="updateUser()">modifier</button>
+  <div class="card">
+  <article class="card-body">
+
+
+      <div class="form-group">
+        <label>Your email</label>
+          <input name="" class="form-control" id="usernames" placeholder="username" type="text">
+      </div> <!-- form-group// -->
+      <div class="form-group">
+        <a class="float-right" href="#">Forgot?</a>
+        <label>Your password</label>
+          <input class="form-control" id="passwords" placeholder="******" type="password">
+      </div> <!-- form-group// --> 
+      <div class="form-group"> 
+      <div class="checkbox">
+        <label> <input type="checkbox"> Save password </label>
+      </div> <!-- checkbox .// -->
+      </div> <!-- form-group// -->  
+      <div class="form-group">
+          <button onclick="authe()" class="btn btn-primary btn-block"> Login  </button>
+      </div> <!-- form-group// -->                                                           
+
+  </article>
+  </div> <!-- card.// -->
+  
 </div>
 
-
-<div id="deleteform">
-  <input type="number" id="idUserDelete" placeholder="ID D'UTILISATEUR A Supprimer"><br>
-
-  <button class="btn btn-success" onclick="deleteUser()">supprimer</button>
 </div>
 
+<div id="usersId">
+
+      <div class="actionUser">
+      <!-- Button modal -->
+      <button type="button" class="btn " style="background-color:#dc3545;color: aliceblue;" data-toggle="modal" data-target="#updateUserModal">
+        Delete User
+      </button>
+
+      <!-- Button modal -->
+      <button type="button" class="btn " style="background-color:#1fdb67;color: aliceblue;"  data-toggle="modal" data-target="#deleteUserModal">
+        update User
+      </button>
+
+      <!-- Button modal -->
+      <button type="button" class="btn " style="background-color:#2b70b1;color: aliceblue;"  data-toggle="modal" data-target="#addUserModal">
+        Add User
+      </button>
+      </div>
+      <!-- Modal update user -->
+      <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="deleteform">
+                <select type="number" id="idUserDelete" placeholder="ID D'UTILISATEUR A Supprimer"></select><br>
+              
+                
+              </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-success" onclick="deleteUser()">supprimer</button> 
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
 
-<div id="Addform">
-  <input type="text" id="newUsername" placeholder="newUsername"><br>
-  <input type="email" id="newEmail" placeholder="newEmail"><br>
-  <input type="password" id="newPassword" placeholder="newPassword"><br>
-  <input type="text" id="newRole" placeholder="ROLE {admin, author, guest}"><br><br>
-  <button class="btn btn-success" onclick="addUser()">Ajouter</button>
+
+
+      <!-- Modal update user -->
+      <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="updateform">
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="idUser">Chose an user</label>
+                  <select class="form-select" id="idUser" >
+
+                  </select>
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">User name</span>
+                  <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+              
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">email</span>
+                  <input type="text" class="form-control"  id="email" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">password</span>
+                  <input type="password" class="form-control"  id="password" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="role">Options</label>
+                  <select class="form-select" id="role">
+                  
+                    <option value="Admin">Admin</option>
+                    <option value="Guest">Guest</option>
+                    <option value="Author">Author</option>
+                  </select>
+                </div>
+              
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-success" onclick="updateUser()">modifier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- Modal update user -->
+      <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="Addform">
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">User name</span>
+                  <input type="text" class="form-control" id="newUsername" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">Email</span>
+                  <input type="text" class="form-control" id="newEmail" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">Password</span>
+                  <input type="password" class="form-control" id="newPassword" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            
+                
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="newRole">Options</label>
+                  <select class="form-select" id="newRole">                
+                    <option value="Admin">Admin</option>
+                    <option value="Guest">Guest</option>
+                    <option value="Author">Author</option>
+                  </select>
+                </div>
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-success" onclick="addUser()">Ajouter</button>      </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+        <!-- <div class="container">
+          <button>La gestion des Utilisateurs</button> 
+          <button>La gestion des Articles</button> 
+          <button>La gestion des Commentaires</button>
+          <button>La gestion des Tags</button>
+
+        </div> -->
+      <div style="margin-right: 100px; margin-left: 100px;">
+        <div id="tableuser" class="table"></div>
+        <table class="table">
+          <thead class="table-dark">
+          
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
+              <th scope="col">Password</th>
+            </tr>
+          </thead>
+          <tbody id="usertable">
+          
+        
+              <!-- <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>Admin</td>
+              <td><a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a></td> -->
+            
+            
+          </tbody>
+        </table> 
+        
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            
+              <a class="page-link" onclick="getUserPage(parseInt(nume)-1)">Previeus</a>
+            
+            <li class="page-item"><a class="page-link" onclick="getUserPage(0)">1</a></li>
+            <li class="page-item"><a class="page-link" onclick="getUserPage(1)" >2</a></li>
+            <li class="page-item"><a class="page-link" onclick="getUserPage(2)">3</a></li>
+            <li class="page-item">
+              <a class="page-link" onclick="getUserPage(parseInt(nume)+1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+
+</div> 
 </div>
-  <!-- <div class="container">
-    <button>La gestion des Utilisateurs</button> 
-    <button>La gestion des Articles</button> 
-    <button>La gestion des Commentaires</button>
-    <button>La gestion des Tags</button>
+<div id ="article">
 
-  </div> -->
-<div style="margin-right: 100px; margin-left: 100px;">
-  <div id="tableuser" class="table"></div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Role</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody id="usertable">
+            <div class="container" >
+              <div class="row justify-content-center"  id="articles">
+          
+                </div>
+          
+
+            
+                  
+                    
+                </div>
+           
+            
+            <nav aria-label="Page navigation example" style="margin-right: 42%;">
+              <ul class="pagination justify-content-end">
+                
+                  <a class="page-link" onclick="getArticlesPage(parseInt(numeArticle)-1)">Previeus</a>
+                
+                <li class="page-item"><a class="page-link" onclick="getArticlesPage(0)">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="getArticlesPage(1)" >2</a></li>
+                <li class="page-item"><a class="page-link" onclick="getArticlesPage(2)">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" onclick="getArticlesPage(parseInt(numeArticle)+1)">Next</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+
+
+<div id="ArticlePage">
+  <h1 id="title" style="margin-left: 40%; color: coral;"></h1>
+  <img class="imageBlog"  id="image">
+  <br>
+  <br>
+  <br>
+  <p style="margin-left: 20%;margin-right: 20%;"  id="content"></p>
+
+</div>
+<script>
+        function connexion(){
+          
+          var nodes = document.getElementById('auth');
+        nodes.style.setProperty("display", "inline", "important");
+        nodes.style.setProperty("margin-left", "20%", "important");
+
+        var nodeArticle= document.getElementById('article');
+        nodeArticle.style.setProperty("display", "none", "important");
+
+        var nodeArticle1= document.getElementById('usersId');
+        nodeArticle1.style.setProperty("display", "none", "important");
+
+        var nodes1 = document.getElementById('ArticlePage');
+        nodes1.style.setProperty("display", "none", "important");
+        }
+
+</script>
+
+<script>
+  function authe(){
+      
+      let username= document.getElementById('usernames').value;
+      let password= document.getElementById('passwords').value;
+      var con=document.getElementById('connexion');
+      con.innerHTML="connexion";
+data={username,password};
+      fetch('/users/api/login', {
+          method: 'POST',
+          headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json' 
+          
+      },
+      body: JSON.stringify(data)
+          }).then(res => res.json())
+   .then(function(data) {
+    document.body.style.background = "#E9967A";  
+  if(data.status==403){
+
+  }else{
+  
+
+  var nodes = document.getElementById('usersId');
+ nodes.style.setProperty("display", "none", "important");
+ 
+ var nodes1 = document.getElementById('ArticlePage');
+ nodes1.style.setProperty("display", "none", "important");
+ 
+ var nodeArticle = document.getElementById('article');
+ nodeArticle.style.setProperty("display", "inline", "important");
+ 
+ var nodes2 = document.getElementById('auth');
+ nodes2.style.setProperty("display", "none", "important");
+
+ var conn=document.getElementById('connexion');
+ conn.innerHTML="deconnexion";
+   console.log(data);
+   let ob = Object.keys(data.articles)
+   var article=document.getElementById('articles');
+
+   for(var i=0;i<ob.length;i++){
+     var div1=document.createElement("div");
+         div1.classList.add('col-md-4');
+         article.appendChild(div1);
+
+     var div2=document.createElement("div");
+         div2.classList.add('card');
+         div2.style.width="18 rem";
+         div2.style.margin="20px";
+         div1.appendChild(div2); 
+
+     var img=document.createElement("img");
+     
+       img.setAttribute("src", "http://lorempixel.com/400/20"+data.articles[i].id);
+       img.style.height="180px";
+       img.style.width="100 px !important";
+       img.classList.add('card-img-top');
+       div2.appendChild(img); 
+   
+       var div3=document.createElement("div");
+         div3.classList.add('card-body');
+         div2.appendChild(div3);
+
+     var h5=document.createElement("h5");
+   
+     h5.classList.add('card-title');
+     var text=  document.createTextNode(data.articles[i].title);
+     h5.appendChild(text);
+     div3.appendChild(h5); 
+     
+     
+
+
+   var p=document.createElement("p");
+   
+   p.classList.add('card-text');
+   text=  document.createTextNode(data.articles[i].content.substr(0,80)+".....");
+   p.appendChild(text);
+   div3.appendChild(p);
+
+   var a=document.createElement("a");
+   
+   a.classList.add('btn');
+   a.classList.add('btn-primary');
+   text=  document.createTextNode("learn more");
+   a.appendChild(text);
+   div3.appendChild(a);
+
+   
+   }
+ 
+  }
+   })
+  }
+
+</script>
+
+
+
+<script>var numeArticle=0;</script>
+      
+      <script>  
     
-  
-        <!-- <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>Admin</td>
-        <td><a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a></td> -->
-      
-      
-    </tbody>
-  </table> 
-  
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
-      
-        <a class="page-link" onclick="getUserPage(parseInt(nume)-1)">Previeus</a>
-      
-      <li class="page-item"><a class="page-link" onclick="getUserPage(0)">1</a></li>
-      <li class="page-item"><a class="page-link" onclick="getUserPage(1)" >2</a></li>
-      <li class="page-item"><a class="page-link" onclick="getUserPage(2)">3</a></li>
-      <li class="page-item">
-        <a class="page-link" onclick="getUserPage(parseInt(nume)+1)">Next</a>
-      </li>
-    </ul>
-  </nav>
-  <script src="./javascripts/index.js"></script>
-<button onclick="getUserPage()">test</button>
+    function getArticlesPage(num){
+              
 
-<script>getUser()</script>
+                let tbody=document.getElementById('articles');
+                while(tbody.hasChildNodes()){
+                  tbody.removeChild(tbody.firstChild);
+                }
+
+                
+                
+                fetch('/articles/page/'+num , {
+                method: 'GET',
+                headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                
+                }).then(res => res.json())
+   .then(function(data) {
+   console.log(data);
+   let ob = Object.keys(data.articles)
+   var article=document.getElementById('articles');
+
+   for(var i=0;i<ob.length;i++){
+     var div1=document.createElement("div");
+         div1.classList.add('col-md-4');
+         article.appendChild(div1);
+
+     var div2=document.createElement("div");
+         div2.classList.add('card');
+         div2.style.width="18 rem";
+         div2.style.margin="20px";
+         div1.appendChild(div2); 
+
+     var img=document.createElement("img");
+     var loremImg=+ data.articles[i].id+ +200;
+       img.setAttribute("src", "http://lorempixel.com/400/"+loremImg);
+       img.style.height="180px";
+       img.style.width="100 px !important";
+       img.classList.add('card-img-top');
+       div2.appendChild(img); 
+   
+       var div3=document.createElement("div");
+         div3.classList.add('card-body');
+         div2.appendChild(div3);
+
+     var h5=document.createElement("h5");
+   
+     h5.classList.add('card-title');
+     var text=  document.createTextNode(data.articles[i].title);
+     h5.appendChild(text);
+     div3.appendChild(h5); 
+     
+     
+
+
+   var p=document.createElement("p");
+   
+   p.classList.add('card-text');
+   text=  document.createTextNode(data.articles[i].content.substr(0,80)+".....");
+   p.appendChild(text);
+   div3.appendChild(p);
+
+   var a=document.createElement("button");
+   
+   a.classList.add('btn');
+   a.classList.add('btn-primary');
+   text=  document.createTextNode("learn more");
+  
+   a.appendChild(text);
+  
+   //a.onclick = getArticleDetails(1);
+   a.setAttribute('onclick','getArticleDetails('+data.articles[i].id+')');
+
+   div3.appendChild(a);
+
+   }
+   numeArticle=data.num;
+   
+   })
+   
+   }
+      </script>
+
+
+
+<script>
+function getArticleDetails(id){
+
+  document.body.style.background = "#FFFF"; 
+       var nodes = document.getElementById('ArticlePage');
+        nodes.style.setProperty("display", "inline", "important");
+
+        var nodeArticle= document.getElementById('article');
+        nodeArticle.style.setProperty("display", "none", "important");
+
+        var nodeArticle1= document.getElementById('usersId');
+        nodeArticle1.style.setProperty("display", "none", "important");
+
+        var nodes1 = document.getElementById('auth');
+        nodes1.style.setProperty("display", "none", "important");
+       
+        let p=document.getElementById('content');
+          
+        p.innerHTML = "";
+
+        var title=document.getElementById('title');
+            title.innerHTML = "";
+                
+                fetch('/articles/'+id , {
+                method: 'GET',
+                headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                
+                }).then(res => res.json())
+                .then(function(data) {
+                console.log(data);
+                
+                var article=document.getElementById('ArticlePage');
+                var title=document.getElementById('title');
+                var img=document.getElementById('image');
+                var loremImg=+ data.article.id+ +200;
+                img.setAttribute("src", "http://lorempixel.com/400/"+loremImg);
+                var text=  document.createTextNode(data.article.title);
+                title.appendChild(text);
+                p=document.getElementById('content');
+                var text=  document.createTextNode(data.article.content);
+                p.appendChild(text);
+                
+                })
+                
+                }
+</script>
+
+
+
+        <script src="./javascripts/article.js"></script>
+        <script>getArticles()</script>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="./javascripts/index.js"></script>
+
+<!-- <script>getUser()</script> -->
 <script>var nume=0;</script>
 
 <script>  
@@ -126,6 +659,16 @@ function getUserPage(num){
 let tbody=document.getElementById('usertable');
 while(tbody.hasChildNodes()){
   tbody.removeChild(tbody.firstChild);
+}
+
+let sel=document.getElementById('idUser');
+while(sel.hasChildNodes()){
+  sel.removeChild(sel.firstChild);
+}
+
+let seldeluser=document.getElementById('idUserDelete');
+while(seldeluser.hasChildNodes()){
+  seldeluser.removeChild(seldeluser.firstChild);
 }
 let username= document.getElementById('newUsername').value;
 let email= document.getElementById('newEmail').value;
@@ -148,33 +691,84 @@ headers:{
  var row=document.createElement("tr");
  var cell =document.createElement("th");
  for(var i=0;i<ob.length;i++){
+// get reference to select element
+var sel = document.getElementById('idUser');
+
+// create new option element
+var opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
+
+// set value property of opt
+opt.value = data.users[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
+// get reference to select element
+ sel = document.getElementById('idUserDelete');
+
+// create new option element
+ opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.users[i].username) );
+
+// set value property of opt
+opt.value = data.users[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+
+
    var row = document.createElement("tr");  
    var cell = document.createElement("th");   
    cellText=  document.createTextNode(i);
    cell.appendChild(cellText);
+   cell.setAttribute("id", "user_id");
    row.appendChild(cell);
    
 
-   cell = document.createElement("td");   
-   cellText=  document.createTextNode(data.users[i].id);
-   cell.appendChild(cellText);
-   row.appendChild(cell);
 
-   cell = document.createElement("td");   
+   cell = document.createElement("td");
+   span=  document.createElement("span");  
    cellText=  document.createTextNode(data.users[i].username);
-   cell.appendChild(cellText);
+  span.appendChild(cellText);
+   span.setAttribute("id", "username");
+   cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
    cellText=  document.createTextNode(data.users[i].email);
-   cell.appendChild(cellText);
+   span=  document.createElement("span");
+   span.appendChild(cellText);
+   span.setAttribute("id", "email");
+   cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
-  var h= "<a href="+"#editEmployeeModal"+" data-filiere_id="+data.users[i].id+" class="+"edit" +" data-toggle="+"modal"+"><i class="+"material-icons"+" data-toggle="+"tooltip"+" title="+"Edit"+">&#xE254;</i></a>";
-   cell.innerHTML=h;
- 
+    cellText=  document.createTextNode(data.users[i].role);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
    row.appendChild(cell);
+
+
+    cell = document.createElement("td");   
+    cellText=  document.createTextNode(data.users[i].password);
+    span=  document.createElement("span");
+    span.appendChild(cellText);
+   span.setAttribute("id", "role");
+   cell.appendChild(span);
+   row.appendChild(cell);
+
+
+ 
    tab.appendChild(row)
 
  }
@@ -189,7 +783,32 @@ console.log(num);
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
 </html>

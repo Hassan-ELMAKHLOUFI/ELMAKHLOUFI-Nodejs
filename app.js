@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var articlesRouter= require('./routes/articles');
@@ -22,4 +21,5 @@ app.set("view engine", "ejs")
 app.listen(8000, function(){
 	console.log("App started in port 8000");
 })
+
 module.exports = app;

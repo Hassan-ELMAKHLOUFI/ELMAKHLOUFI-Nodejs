@@ -3,7 +3,7 @@ const router = express.Router()
 //var Users = require('../repositories/users');
 
 var { Article } = require('../models')
-	
+var { Comment } = require('../models')	
 
 
 		router.get('/',async function(req, res,next){
@@ -13,6 +13,18 @@ var { Article } = require('../models')
 				limit :9
 			});
 			res.send({articles:article.rows,num:1});
+		});
+
+		router.get('/:id',async function(req, res,next){
+			console.log("teeeeeeeeeest");
+			art= await Article.findOne({ where: { id: req.params.id } })
+			comm=Comment.findAll({
+				where: {
+					ArticleId:req.params.id
+				}
+			});
+			console.log(comm);
+			res.send({article:art,comments:comm});
 		});
 
 		router.get('/page/:num',async function(req, res,next){

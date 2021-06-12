@@ -5,7 +5,7 @@ async function update (){
    
 
 articleData={title:faker.name.lastName(),
-               content:faker.lorem.paragraph()};
+               content:faker.lorem.paragraphs()};
 
     await Article.update(articleData, {
           
