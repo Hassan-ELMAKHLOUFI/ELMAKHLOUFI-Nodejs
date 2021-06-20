@@ -16,12 +16,14 @@
   background-color: #E9967A;
 } */
 
-.actionUser{
+.action{
   margin-left: 70%;
 
  
 }
-
+.actionComment{
+  margin-left:60%;
+}
 button {
   border-radius: 1px;
   min-width: 100px;
@@ -58,8 +60,13 @@ button {
           <li class="nav-item">
             <a class="nav-link" style="color: cornsilk;" onclick="getArticles()" href="#">Articles</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" style="margin-left: 1000px !important; color: cornsilk;"  onclick="connexion()" id="connexion" href="#">Connextion</a>
+            <a class="nav-link" style="color: cornsilk;" onclick="getCommentPage(0)" href="#">Comments</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="margin-left: 800px !important; color: cornsilk;"  onclick="connexion()" id="connexion" href="#">Connexion</a>
           </li>
       
         </ul>
@@ -84,7 +91,7 @@ button {
 
 
       <div class="form-group">
-        <label>Your email</label>
+        <label> Your Username </label>
           <input name="" class="form-control" id="usernames" placeholder="username" type="text">
       </div> <!-- form-group// -->
       <div class="form-group">
@@ -108,9 +115,15 @@ button {
 
 </div>
 
+
+
+
+
+
+
 <div id="usersId">
 
-      <div class="actionUser">
+      <div class="action">
       <!-- Button modal -->
       <button type="button" class="btn " style="background-color:#dc3545;color: aliceblue;" data-toggle="modal" data-target="#updateUserModal">
         Delete User
@@ -131,7 +144,7 @@ button {
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -154,15 +167,13 @@ button {
 
 
 
-
-
-
+    
       <!-- Modal update user -->
       <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -183,7 +194,7 @@ button {
               
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1">email</span>
-                  <input type="text" class="form-control"  id="email" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control"  id="email" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
 
                 <div class="input-group mb-3">
@@ -205,7 +216,7 @@ button {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button class="btn btn-success" onclick="updateUser()">modifier</button>
+              <button class="btn btn-success" onclick="updateUser()">Update</button>
             </div>
           </div>
         </div>
@@ -220,7 +231,7 @@ button {
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -257,7 +268,7 @@ button {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button class="btn btn-success" onclick="addUser()">Ajouter</button>      </div>
+              <button class="btn btn-success" onclick="addUser()">Add</button>      </div>
           </div>
         </div>
       </div>
@@ -315,6 +326,231 @@ button {
 
 </div> 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="commentsId">
+
+  <div class="actionComment">
+  <!-- Button modal -->
+  <button type="button" class="btn " style="background-color:#dc3545;color: aliceblue;" data-toggle="modal" data-target="#updateCommentModal">
+    Delete Comment
+  </button>
+
+  <!-- Button modal -->
+  <button type="button" class="btn " style="background-color:#1fdb67;color: aliceblue;"  data-toggle="modal" data-target="#deleteCommentModal">
+   Update Comment
+  </button>
+
+  <!-- Button modal -->
+  <button type="button" class="btn " style="background-color:#2b70b1;color: aliceblue;"  data-toggle="modal" data-target="#addCommentModal">
+    Add Comment
+  </button>
+  </div>
+  <!-- Modal update user -->
+  <div class="modal fade" id="updateCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="deleteform">
+            <select type="number" id="idCommentDelete" placeholder="Id comment To delete "></select><br>
+          
+            
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-success" onclick="deleteComment()">Delete</button> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal update user -->
+  <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="updateform">
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="idComment">Chose a Comment</label>
+              <select class="form-select" id="idComment" >
+
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Content</span>
+              <input type="text" class="form-control" id="content" placeholder="Content" aria-label="Content" aria-describedby="basic-addon1">
+            </div>
+          
+ 
+          
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-success" onclick="updateComment()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Modal update user -->
+  <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Comment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="Addform">
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Content</span>
+              <input type="text" class="form-control" id="newContent" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            
+        
+            
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="idArticleComment">Chose an Article</label>
+              <select class="form-select" id="idArticleComment" >
+
+              </select>
+            </div>
+
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-success" onclick="addComment()">Ajouter</button>      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <!-- <div class="container">
+      <button>La gestion des Utilisateurs</button> 
+      <button>La gestion des Articles</button> 
+      <button>La gestion des Commentaires</button>
+      <button>La gestion des Tags</button>
+
+    </div> -->
+  <div style="margin-right: 100px; margin-left: 100px;">
+    <div id="tableuser" class="table"></div>
+    <table class="table">
+      <thead class="table-dark">
+      
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Content</th>
+          <th scope="col">Article Id </th>
+          <th scope="col">Date Of creation</th>
+          
+        </tr>
+      </thead>
+      <tbody id="commenttable">
+      
+    
+        
+      </tbody>
+    </table> 
+    
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        
+          <a class="page-link" onclick="getCommentPage(parseInt(numeComment)-1)">Previeus</a>
+        
+        <li class="page-item"><a class="page-link" onclick="getCommentPage(0)">1</a></li>
+        <li class="page-item"><a class="page-link" onclick="getCommentPage(1)" >2</a></li>
+        <li class="page-item"><a class="page-link" onclick="getCommentPage(2)">3</a></li>
+        <li class="page-item">
+          <a class="page-link" onclick="getCommentPage(parseInt(numeComment)+1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+</div> 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id ="article">
 
             <div class="container" >
@@ -322,9 +558,7 @@ button {
           
                 </div>
           
-
-            
-                  
+                 
                     
                 </div>
            
@@ -352,15 +586,25 @@ button {
   <br>
   <br>
   <br>
-  <p style="margin-left: 20%;margin-right: 20%;"  id="content"></p>
+  <p style="margin-left: 20%;margin-right: 20%;"  id="contentPara"></p>
 
 </div>
 <script>
         function connexion(){
-          
+          if(document.getElementById('connexion').textContent=='deconnexion'){
+            name="auth";
+            document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            var con=document.getElementById('connexion');
+      con.innerHTML="connexion";
+  }
+
+          document.body.style.background = "#FFFF"; 
           var nodes = document.getElementById('auth');
         nodes.style.setProperty("display", "inline", "important");
         nodes.style.setProperty("margin-left", "20%", "important");
+
+        var nodeComment = document.getElementById('commentsId');
+    nodeComment.style.setProperty("display", "none", "important");
 
         var nodeArticle= document.getElementById('article');
         nodeArticle.style.setProperty("display", "none", "important");
@@ -396,7 +640,7 @@ data={username,password};
   if(data.status==403){
 
   }else{
-  
+
 
   var nodes = document.getElementById('usersId');
  nodes.style.setProperty("display", "none", "important");
@@ -411,6 +655,7 @@ data={username,password};
  nodes2.style.setProperty("display", "none", "important");
 
  var conn=document.getElementById('connexion');
+
  conn.innerHTML="deconnexion";
    console.log(data);
    let ob = Object.keys(data.articles)
@@ -581,7 +826,7 @@ function getArticleDetails(id){
         var nodes1 = document.getElementById('auth');
         nodes1.style.setProperty("display", "none", "important");
        
-        let p=document.getElementById('content');
+        let p=document.getElementById('contentPara');
           
         p.innerHTML = "";
 
@@ -606,9 +851,10 @@ function getArticleDetails(id){
                 img.setAttribute("src", "http://lorempixel.com/400/"+loremImg);
                 var text=  document.createTextNode(data.article.title);
                 title.appendChild(text);
-                p=document.getElementById('content');
+                p=document.getElementById('contentPara');
                 var text=  document.createTextNode(data.article.content);
                 p.appendChild(text);
+                console.log(text)
                 
                 })
                 
@@ -650,7 +896,7 @@ function getArticleDetails(id){
 
 <!-- <script>getUser()</script> -->
 <script>var nume=0;</script>
-
+<script>var numeComment=0;</script>
 <script>  
 
 function getUserPage(num){
@@ -685,6 +931,8 @@ headers:{
 
 }).then(res => res.json())
 .then(function(data) {
+  var nodeComment = document.getElementById('commentsId');
+ nodeComment.style.setProperty("display", "none", "important");
  console.log(data);
  let ob = Object.keys(data.users)
  var tab=document.getElementById('usertable');
@@ -788,12 +1036,178 @@ console.log(num);
 
 
 
+<script>  
+
+  function getCommentPage(num){
+  
+  
+  let tbody=document.getElementById('commenttable');
+  while(tbody.hasChildNodes()){
+    tbody.removeChild(tbody.firstChild);
+  }
+  
+  let sel=document.getElementById('idComment');
+  while(sel.hasChildNodes()){
+    sel.removeChild(sel.firstChild);
+  }
+  
+  let seldelcomment=document.getElementById('idCommentDelete');
+  while(seldelcomment.hasChildNodes()){
+    seldelcomment.removeChild(seldelcomment.firstChild);
+  }
+  let comment= document.getElementById('newContent').value;
+
+  
+  
+  fetch('/comments/page/'+num, {
+  method: 'GET',
+  headers:{
+   'Accept': 'application/json',
+   'Content-Type': 'application/json'
+  },
+  
+  }).then(res => res.json())
+  .then(function(data) {
+
+
+
+    document.body.style.background = "#FFFF";   
+  
+
+  var nodes = document.getElementById('usersId');
+ nodes.style.setProperty("display", "none", "important");
+ 
+ var nodes1 = document.getElementById('ArticlePage');
+ nodes1.style.setProperty("display", "none", "important");
+ 
+ var nodeArticle = document.getElementById('article');
+ nodeArticle.style.setProperty("display", "none", "important");
+ 
+ var nodes2 = document.getElementById('auth');
+ nodes2.style.setProperty("display", "none", "important");
+ 
+ var nodeComment = document.getElementById('commentsId');
+ nodeComment.style.setProperty("display", "inline", "important");
+
+
+
+   console.log(data);
+   let ob = Object.keys(data.comments)
+   var tab=document.getElementById('commenttable');
+   var row=document.createElement("tr");
+   var cell =document.createElement("th");
+
+   var sizeArt =Object.keys(data.articles).length;;
+
+   for(var i=0;i<sizeArt;i++){ 
+   var sel = document.getElementById('idArticleComment');
+
+  // create new option element
+  var opt = document.createElement('option');
+  
+  // create text node to add to option element (opt)
+  opt.appendChild( document.createTextNode(data.articles[i].title) );
+  
+  // set value property of opt
+  opt.value = data.articles[i].id; 
+  
+  // add opt to end of select box (sel)
+  sel.appendChild(opt);
+  
+}
 
 
 
 
+   for(var i=0;i<ob.length;i++){
+  // get reference to select element
+  var sel = document.getElementById('idComment');
+  
+  // create new option element
+  var opt = document.createElement('option');
+  
+  // create text node to add to option element (opt)
+  opt.appendChild( document.createTextNode(data.comments[i].content) );
+  
+  // set value property of opt
+  opt.value = data.comments[i].id; 
+  
+  // add opt to end of select box (sel)
+  sel.appendChild(opt);
+  
+  
+  
+  // get reference to select element
+   sel = document.getElementById('idCommentDelete');
+  
+  // create new option element
+   opt = document.createElement('option');
+  
+  // create text node to add to option element (opt)
+  opt.appendChild( document.createTextNode(data.comments[i].content) );
+  
+  // set value property of opt
+  opt.value = data.comments[i].id; 
+  
+  // add opt to end of select box (sel)
+  sel.appendChild(opt);
+  
+  
+  
+     var row = document.createElement("tr");  
+     var cell = document.createElement("th");   
+     cellText=  document.createTextNode(i);
+     cell.appendChild(cellText);
+     cell.setAttribute("id", "comment_id");
+     row.appendChild(cell);
+     
+  
+  
+     cell = document.createElement("td");
+     span=  document.createElement("span");  
+     cellText=  document.createTextNode(data.comments[i].content);
+    span.appendChild(cellText);
+     span.setAttribute("id", "content");
+     cell.appendChild(span);
+     row.appendChild(cell);
+     
+     cell = document.createElement("td");   
+     cellText=  document.createTextNode(data.comments[i].ArticleId);
+     span=  document.createElement("span");
+     span.appendChild(cellText);
+     span.setAttribute("id", "CommentArticleId");
+     cell.appendChild(span);
+     row.appendChild(cell);
+     
+     cell = document.createElement("td");   
+      cellText=  document.createTextNode(data.comments[i].createdAt);
+      span=  document.createElement("span");
+      span.appendChild(cellText);
+     span.setAttribute("id", "createdAt");
+     cell.appendChild(span);
+     row.appendChild(cell);
+  
+  
+
+   
+     tab.appendChild(row)
+  
+   }
+  numeComment=data.num;
+  console.log(num);
+   
+  })
+  }
+  
+  
+  
+  </script>
+  
 
 
+
+
+<script src="./javascripts/Comment.js"></script>
 
 
 

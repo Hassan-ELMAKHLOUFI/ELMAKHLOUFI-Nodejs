@@ -15,6 +15,9 @@ nodeArticle.style.setProperty("display", "inline", "important");
 var nodes2 = document.getElementById('auth');
 nodes2.style.setProperty("display", "none", "important");
 
+var nodeComment = document.getElementById('commentsId');
+nodeComment.style.setProperty("display", "none", "important");
+
     num =0;
     let tbody=document.getElementById('articles');
     while(tbody.hasChildNodes()){

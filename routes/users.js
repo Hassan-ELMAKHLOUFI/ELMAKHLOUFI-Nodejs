@@ -5,19 +5,10 @@ const jwt = require('jsonwebtoken');
 
 var { User } = require('../models')
 var { Article } = require('../models')
-		// router.get('/',async function(req, res,next){
-		// 	user = await User.findAndCountAll({
-		// 		offset: 0,
-		// 		limit :7
-		// 	});
-		// 	res.send({users:user.rows,num:0});
-		// 	//res.render('index',user);
-			
-		// });
 
 
 		router.get('/', verifyToken, function(req, res) {  
-			console.log("tte");
+		
 			jwt.verify(req.cookies.auth, 'secretkey',async function (err, authData) {
 				
 			  if(err || authData.user.role!="admin") {
@@ -35,11 +26,6 @@ var { Article } = require('../models')
 			  }
 			});
 		  });
-
-
-
-
-
 
 
 		router.get('/page/:num',async function(req, res,next){
@@ -67,10 +53,6 @@ var { Article } = require('../models')
         
 
 		});
-
-
-
-
 
 		router.put('/',async function(req, res,next) {
 			const datareq = req.body;
@@ -108,7 +90,7 @@ var { Article } = require('../models')
 
 		  
 		  router.post('/api/login',async function(req, res){
-			// Mock user
+			
 
 			const user = await User.findOne({ where: { username: req.body.username,password :req.body.password}});
 
@@ -123,7 +105,7 @@ var { Article } = require('../models')
 						offset: 0,
 						limit :9
 					});
-					res.send({articles:article.rows,num:1});
+					res.send({articles:article.rows,num:1,status:200});
 			 
 				 });
 			}

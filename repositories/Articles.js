@@ -9,7 +9,6 @@ module.exports = {
 	getArticles: function(offset=0, limit=10){
 		return Article.findAll({offset: offset, limit: limit});
 	},
-
 	
 	getArticles: function(id){
 		return Article.findOne({

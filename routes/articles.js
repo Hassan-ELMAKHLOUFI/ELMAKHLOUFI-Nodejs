@@ -16,7 +16,7 @@ var { Comment } = require('../models')
 		});
 
 		router.get('/:id',async function(req, res,next){
-			console.log("teeeeeeeeeest");
+			
 			art= await Article.findOne({ where: { id: req.params.id } })
 			comm=Comment.findAll({
 				where: {

@@ -1,29 +1,42 @@
 
-   function addUser(){
-
-    let tbody=document.getElementById('usertable');
+   function addComment(){
+    let content= document.getElementById('newContent').value;
+    const createdAt=new Date().toString();
+    const updatedAt=new Date().toString();
+    let ArticleId= document.getElementById('idArticleComment').value;
+  
+    let tbody=document.getElementById('commenttable');
   while(tbody.hasChildNodes()){
     tbody.removeChild(tbody.firstChild);
   }
 
-  let sel=document.getElementById('idUser');
+  let sel=document.getElementById('idComment');
 while(sel.hasChildNodes()){
   sel.removeChild(sel.firstChild);
 }
 
-let seldeluser=document.getElementById('idUserDelete');
-while(seldeluser.hasChildNodes()){
-  seldeluser.removeChild(seldeluser.firstChild);
+let seldelcomment=document.getElementById('idCommentDelete');
+while(seldelcomment.hasChildNodes()){
+  seldelcomment.removeChild(seldelcomment.firstChild);
 }
 
 
-  let username= document.getElementById('newUsername').value;
-  let email= document.getElementById('newEmail').value;
-  let role= document.getElementById('newRole').value;
-  let password= document.getElementById('newPassword').value;
+var select = document.getElementById("idComment");
+var length = select.options.length;
+for (i = length-1; i >= 0; i--) {
+  select.options[i] = null;
+}
 
-data={username,email,role,password};
-        fetch('/users', {
+
+var select1 = document.getElementById("idCommentDelete");
+var length = select1.options.length;
+for (i = length-1; i >= 0; i--) {
+  select1.options[i] = null;
+}
+
+
+data={content,createdAt,updatedAt,ArticleId};
+        fetch('/comments', {
           method: 'POST',
           headers:{
             'Accept': 'application/json',
@@ -32,25 +45,45 @@ data={username,email,role,password};
           body: JSON.stringify(data)
         }).then(res => res.json())
         .then(function(data) {
-          
-          nodeComment.style.setProperty("display", "none", "important");
          console.log(data);
-         let ob = Object.keys(data.users)
-         var tab=document.getElementById('usertable');
+         let ob = Object.keys(data.comments)
+         var tab=document.getElementById('commenttable');
          var row=document.createElement("tr");
          var cell =document.createElement("th");
+      
+         var sizeArt =Object.keys(data.articles).length;;
+      
+         for(var i=0;i<sizeArt;i++){ 
+         var sel = document.getElementById('idArticleComment');
+        // create new option element
+        var opt = document.createElement('option');
+        
+        // create text node to add to option element (opt)
+        opt.appendChild( document.createTextNode(data.articles[i].title) );
+        
+        // set value property of opt
+        opt.value = data.articles[i].id; 
+        
+        // add opt to end of select box (sel)
+        sel.appendChild(opt);
+        
+      }
+      
+      
+     
+      
          for(var i=0;i<ob.length;i++){
         // get reference to select element
-        var sel = document.getElementById('idUser');
+        var sel = document.getElementById('idComment');
         
         // create new option element
         var opt = document.createElement('option');
         
         // create text node to add to option element (opt)
-        opt.appendChild( document.createTextNode(data.users[i].username) );
+        opt.appendChild( document.createTextNode(data.comments[i].content) );
         
         // set value property of opt
-        opt.value = data.users[i].id; 
+        opt.value = data.comments[i].id; 
         
         // add opt to end of select box (sel)
         sel.appendChild(opt);
@@ -58,16 +91,16 @@ data={username,email,role,password};
         
         
         // get reference to select element
-         sel = document.getElementById('idUserDelete');
+         sel = document.getElementById('idCommentDelete');
         
         // create new option element
          opt = document.createElement('option');
         
         // create text node to add to option element (opt)
-        opt.appendChild( document.createTextNode(data.users[i].username) );
+        opt.appendChild( document.createTextNode(data.comments[i].content) );
         
         // set value property of opt
-        opt.value = data.users[i].id; 
+        opt.value = data.comments[i].id; 
         
         // add opt to end of select box (sel)
         sel.appendChild(opt);
@@ -78,82 +111,60 @@ data={username,email,role,password};
            var cell = document.createElement("th");   
            cellText=  document.createTextNode(i);
            cell.appendChild(cellText);
-           cell.setAttribute("id", "user_id");
+           cell.setAttribute("id", "comment_id");
            row.appendChild(cell);
            
         
         
            cell = document.createElement("td");
            span=  document.createElement("span");  
-           cellText=  document.createTextNode(data.users[i].username);
+           cellText=  document.createTextNode(data.comments[i].content);
           span.appendChild(cellText);
-           span.setAttribute("id", "username");
+           span.setAttribute("id", "content");
            cell.appendChild(span);
            row.appendChild(cell);
            
            cell = document.createElement("td");   
-           cellText=  document.createTextNode(data.users[i].email);
+           cellText=  document.createTextNode(data.comments[i].ArticleId);
            span=  document.createElement("span");
            span.appendChild(cellText);
-           span.setAttribute("id", "email");
+           span.setAttribute("id", "CommentArticleId");
            cell.appendChild(span);
            row.appendChild(cell);
            
            cell = document.createElement("td");   
-            cellText=  document.createTextNode(data.users[i].role);
+            cellText=  document.createTextNode(data.comments[i].createdAt);
             span=  document.createElement("span");
             span.appendChild(cellText);
-           span.setAttribute("id", "role");
+           span.setAttribute("id", "createdAt");
            cell.appendChild(span);
            row.appendChild(cell);
         
         
-            cell = document.createElement("td");   
-            cellText=  document.createTextNode(data.users[i].password);
-            span=  document.createElement("span");
-            span.appendChild(cellText);
-           span.setAttribute("id", "role");
-           cell.appendChild(span);
-           row.appendChild(cell);
-        
-        
+      
          
            tab.appendChild(row)
         
          }
-        
-          
-        })
-     
-  }
 
+        })
+        }
 function getUser(){
 
-
-
   document.body.style.background = "#FFFF"; 
-
-
-
-
-  
-  var nodes1 = document.getElementById('ArticlePage');
-  nodes1.style.setProperty("display", "none", "important");
-
-
-
-  var nodeArticle = document.getElementById('article');
-  nodeArticle.style.setProperty("display", "none", "important");
-  
   var nodes = document.getElementById('usersId');
-  nodes.style.setProperty("display", "inline", "important");
+nodes.style.setProperty("display", "inline", "important");
 
-  var nodes2 = document.getElementById('auth');
-  nodes2.style.setProperty("display", "none", "important");
-  
-  
-  
- 
+ var nodeArticle= document.getElementById('article');
+ nodeArticle.style.setProperty("display", "none", "important");
+
+
+var nodes1 = document.getElementById('ArticlePage');
+nodes1.style.setProperty("display", "none", "important");
+
+
+var nodes2 = document.getElementById('auth');
+nodes2.style.setProperty("display", "none", "important");
 
 
 
@@ -178,7 +189,6 @@ while(sel.hasChildNodes()){
     }).then(res => res.json())
     .then(function(data) {
      console.log(data);
-     
      let ob = Object.keys(data.users)
      var tab=document.getElementById('usertable');
      var row=document.createElement("tr");
@@ -264,8 +274,6 @@ while(sel.hasChildNodes()){
      
        tab.appendChild(row)
     
-       var nodeComment = document.getElementById('commentsId');
-       nodeComment.style.setProperty("display", "none", "important");
      }
 
      
@@ -273,35 +281,33 @@ while(sel.hasChildNodes()){
     }
 
 
-function updateUser(){
-  let tbody=document.getElementById('usertable');
+function updateComment(){
+  let tbody=document.getElementById('commenttable');
   while(tbody.hasChildNodes()){
     tbody.removeChild(tbody.firstChild);
   }
+  let id=document.getElementById('idComment').value;;
+  let content= document.getElementById('content').value;
 
 
 
-  let id=document.getElementById('idUser').value;;
-  let username= document.getElementById('username').value;
-  let email= document.getElementById('email').value;
-  let role= document.getElementById('role').value;
-  let password= document.getElementById('password').value;
 
-  var select = document.getElementById("idUser");
+
+  var select = document.getElementById("idComment");
   var length = select.options.length;
   for (i = length-1; i >= 0; i--) {
     select.options[i] = null;
   }
-
-
-
-  var select1 = document.getElementById("idUserDelete");
-  var length = select1.options.length;
+  
+  
+  var select1 = document.getElementById("idCommentDelete");
+ length = select1.options.length;
   for (i = length-1; i >= 0; i--) {
     select1.options[i] = null;
   }
-data={id,username,email,role,password};
- fetch('/users', {
+
+data={id,content};
+ fetch('/comments', {
   method: 'PUT',
   headers:{
     'Accept': 'application/json',
@@ -311,22 +317,44 @@ data={id,username,email,role,password};
 }).then(res => res.json())
 .then(function(data) {
  console.log(data);
- let ob = Object.keys(data.users)
- var tab=document.getElementById('usertable');
+ let ob = Object.keys(data.comments)
+ var tab=document.getElementById('commenttable');
  var row=document.createElement("tr");
  var cell =document.createElement("th");
+
+ var sizeArt =Object.keys(data.articles).length;;
+
+ for(var i=0;i<sizeArt;i++){ 
+ var sel = document.getElementById('idArticleComment');
+// create new option element
+var opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.articles[i].title) );
+
+// set value property of opt
+opt.value = data.articles[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+}
+
+
+
+
  for(var i=0;i<ob.length;i++){
 // get reference to select element
-var sel = document.getElementById('idUser');
+var sel = document.getElementById('idComment');
 
 // create new option element
 var opt = document.createElement('option');
 
 // create text node to add to option element (opt)
-opt.appendChild( document.createTextNode(data.users[i].username) );
+opt.appendChild( document.createTextNode(data.comments[i].content) );
 
 // set value property of opt
-opt.value = data.users[i].id; 
+opt.value = data.comments[i].id; 
 
 // add opt to end of select box (sel)
 sel.appendChild(opt);
@@ -334,16 +362,16 @@ sel.appendChild(opt);
 
 
 // get reference to select element
- sel = document.getElementById('idUserDelete');
+ sel = document.getElementById('idCommentDelete');
 
 // create new option element
  opt = document.createElement('option');
 
 // create text node to add to option element (opt)
-opt.appendChild( document.createTextNode(data.users[i].username) );
+opt.appendChild( document.createTextNode(data.comments[i].content) );
 
 // set value property of opt
-opt.value = data.users[i].id; 
+opt.value = data.comments[i].id; 
 
 // add opt to end of select box (sel)
 sel.appendChild(opt);
@@ -354,43 +382,35 @@ sel.appendChild(opt);
    var cell = document.createElement("th");   
    cellText=  document.createTextNode(i);
    cell.appendChild(cellText);
-   cell.setAttribute("id", "user_id");
+   cell.setAttribute("id", "comment_id");
    row.appendChild(cell);
    
 
 
    cell = document.createElement("td");
    span=  document.createElement("span");  
-   cellText=  document.createTextNode(data.users[i].username);
+   cellText=  document.createTextNode(data.comments[i].content);
   span.appendChild(cellText);
-   span.setAttribute("id", "username");
+   span.setAttribute("id", "content");
    cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
-   cellText=  document.createTextNode(data.users[i].email);
+   cellText=  document.createTextNode(data.comments[i].ArticleId);
    span=  document.createElement("span");
    span.appendChild(cellText);
-   span.setAttribute("id", "email");
+   span.setAttribute("id", "CommentArticleId");
    cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].role);
+    cellText=  document.createTextNode(data.comments[i].createdAt);
     span=  document.createElement("span");
     span.appendChild(cellText);
-   span.setAttribute("id", "role");
+   span.setAttribute("id", "createdAt");
    cell.appendChild(span);
    row.appendChild(cell);
 
-
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].password);
-    span=  document.createElement("span");
-    span.appendChild(cellText);
-   span.setAttribute("id", "role");
-   cell.appendChild(span);
-   row.appendChild(cell);
 
 
  
@@ -398,7 +418,6 @@ sel.appendChild(opt);
 
  }
 
- 
 })
 }
 
@@ -410,28 +429,32 @@ sel.appendChild(opt);
 
 
 
-function deleteUser(){
-  let tbody=document.getElementById('usertable');
+function deleteComment(){
+  let tbody=document.getElementById('commenttable');
   while(tbody.hasChildNodes()){
     tbody.removeChild(tbody.firstChild);
   }
+  let id=document.getElementById('idComment').value;
 
-  let id=  document.getElementById('idUserDelete').value;;
-  var select = document.getElementById("idUserDelete");
+
+
+  var select = document.getElementById("idComment");
   var length = select.options.length;
   for (i = length-1; i >= 0; i--) {
     select.options[i] = null;
   }
-
-
-  var select1 = document.getElementById("idUser");
+  
+  
+  var select1 = document.getElementById("idCommentDelete");
   var length = select1.options.length;
   for (i = length-1; i >= 0; i--) {
     select1.options[i] = null;
   }
+  
+  
 
-data={id,username,email,role,password};
- fetch('/users', {
+data={id};
+ fetch('/comments', {
   method: 'DELETE',
   headers:{
     'Accept': 'application/json',
@@ -441,22 +464,44 @@ data={id,username,email,role,password};
 }).then(res => res.json())
 .then(function(data) {
  console.log(data);
- let ob = Object.keys(data.users)
- var tab=document.getElementById('usertable');
+ let ob = Object.keys(data.comments)
+ var tab=document.getElementById('commenttable');
  var row=document.createElement("tr");
  var cell =document.createElement("th");
+
+ var sizeArt =Object.keys(data.articles).length;;
+
+ for(var i=0;i<sizeArt;i++){ 
+ var sel = document.getElementById('idArticleComment');
+// create new option element
+var opt = document.createElement('option');
+
+// create text node to add to option element (opt)
+opt.appendChild( document.createTextNode(data.articles[i].title) );
+
+// set value property of opt
+opt.value = data.articles[i].id; 
+
+// add opt to end of select box (sel)
+sel.appendChild(opt);
+
+}
+
+
+
+
  for(var i=0;i<ob.length;i++){
 // get reference to select element
-var sel = document.getElementById('idUser');
+var sel = document.getElementById('idComment');
 
 // create new option element
 var opt = document.createElement('option');
 
 // create text node to add to option element (opt)
-opt.appendChild( document.createTextNode(data.users[i].username) );
+opt.appendChild( document.createTextNode(data.comments[i].content) );
 
 // set value property of opt
-opt.value = data.users[i].id; 
+opt.value = data.comments[i].id; 
 
 // add opt to end of select box (sel)
 sel.appendChild(opt);
@@ -464,16 +509,16 @@ sel.appendChild(opt);
 
 
 // get reference to select element
- sel = document.getElementById('idUserDelete');
+ sel = document.getElementById('idCommentDelete');
 
 // create new option element
  opt = document.createElement('option');
 
 // create text node to add to option element (opt)
-opt.appendChild( document.createTextNode(data.users[i].username) );
+opt.appendChild( document.createTextNode(data.comments[i].content) );
 
 // set value property of opt
-opt.value = data.users[i].id; 
+opt.value = data.comments[i].id; 
 
 // add opt to end of select box (sel)
 sel.appendChild(opt);
@@ -484,43 +529,35 @@ sel.appendChild(opt);
    var cell = document.createElement("th");   
    cellText=  document.createTextNode(i);
    cell.appendChild(cellText);
-   cell.setAttribute("id", "user_id");
+   cell.setAttribute("id", "comment_id");
    row.appendChild(cell);
    
 
 
    cell = document.createElement("td");
    span=  document.createElement("span");  
-   cellText=  document.createTextNode(data.users[i].username);
+   cellText=  document.createTextNode(data.comments[i].content);
   span.appendChild(cellText);
-   span.setAttribute("id", "username");
+   span.setAttribute("id", "content");
    cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
-   cellText=  document.createTextNode(data.users[i].email);
+   cellText=  document.createTextNode(data.comments[i].ArticleId);
    span=  document.createElement("span");
    span.appendChild(cellText);
-   span.setAttribute("id", "email");
+   span.setAttribute("id", "CommentArticleId");
    cell.appendChild(span);
    row.appendChild(cell);
    
    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].role);
+    cellText=  document.createTextNode(data.comments[i].createdAt);
     span=  document.createElement("span");
     span.appendChild(cellText);
-   span.setAttribute("id", "role");
+   span.setAttribute("id", "createdAt");
    cell.appendChild(span);
    row.appendChild(cell);
 
-
-    cell = document.createElement("td");   
-    cellText=  document.createTextNode(data.users[i].password);
-    span=  document.createElement("span");
-    span.appendChild(cellText);
-   span.setAttribute("id", "role");
-   cell.appendChild(span);
-   row.appendChild(cell);
 
 
  
@@ -528,6 +565,5 @@ sel.appendChild(opt);
 
  }
 
- 
 })
 }
