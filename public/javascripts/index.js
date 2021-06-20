@@ -32,9 +32,8 @@ data={username,email,role,password};
           body: JSON.stringify(data)
         }).then(res => res.json())
         .then(function(data) {
-          
-          nodeComment.style.setProperty("display", "none", "important");
          console.log(data);
+         
          let ob = Object.keys(data.users)
          var tab=document.getElementById('usertable');
          var row=document.createElement("tr");
@@ -120,13 +119,13 @@ data={username,email,role,password};
          
            tab.appendChild(row)
         
+           var nodeComment = document.getElementById('commentsId');
+           nodeComment.style.setProperty("display", "none", "important");
          }
-        
-          
+    
+         
         })
-     
-  }
-
+        }
 function getUser(){
 
 
